@@ -1,0 +1,6 @@
+node_modules
+_DS*
+customtypes
+slices
+
+.env
