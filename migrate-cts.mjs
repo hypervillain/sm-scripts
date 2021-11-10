@@ -23,7 +23,7 @@ const handleSlicezone = (sz) => {
             `./slices/${key}/model.json`,
             JSON.stringify(
               {
-                ...migrate.default(val, { sliceName: key, from: 'slices'}, { cwd: './' }),
+                ...migrate.default(val, { sliceName: key, from: 'slices'}, { cwd: './' }).model,
                 migrated: undefined
               },
               null,
