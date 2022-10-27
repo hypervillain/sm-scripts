@@ -49,9 +49,9 @@ const handleSlicezone = (sz) => {
       .then(cts => {
         let str = JSON.stringify(cts);
         str = str.replaceAll("\"body\":", "\"slices\":");
+        cts = JSON.parse(str);
         fs.mkdirSync('./customtypes')
         fs.mkdirSync('./slices')
-        cts = JSON.parse(str);
         cts.forEach((ct) => {
 
           const newCt = {
