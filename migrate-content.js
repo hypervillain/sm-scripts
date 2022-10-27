@@ -1,4 +1,3 @@
-
 const fs = require('fs');
 const path = require('path');
 const directoryPath = path.join(__dirname, 'content/export_old_docs');
@@ -20,10 +19,6 @@ function migrateContent() {
                 if (fileData.body) {
                     fileData.body.forEach(function (slice) {
                         slice.value.variation = "default-slice"
-                    //     slice.value.items = slice.value.repeat
-                    //     delete slice.value.repeat
-                    //     slice.value.primary = slice.value["non-repeat"]
-                    //     delete slice.value["non-repeat"]
                     })
                     let str = JSON.stringify(fileData);
                     str = str.replace("\"body\":", "\"slices\":");
