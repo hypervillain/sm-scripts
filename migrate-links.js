@@ -16,7 +16,7 @@ const directoryPath = path.join(__dirname, 'content/new_files_export_before_cont
 async function getComparisonTable() {
     let table = [{ "type": null, "uid": null, "old": null, "new": null, "lang": null }];
 
-    const oldDocuments = await Prismic.client(oldRepoApiEndpoint).query('', { lang: '*' })
+    const oldDocuments = await Prismic.client(oldRepoApiEndpoint).query('', { lang: '*', pageSize: 100 }) //check page size and number of page to iterate
 
     let i = 0;
 
@@ -29,15 +29,13 @@ async function getComparisonTable() {
         i++
     });
 
-    const newDocuments = await Prismic.client(newRepoApiEndpoint).query('', { lang: '*' })
+    const newDocuments = await Prismic.client(newRepoApiEndpoint).query('', { lang: '*', pageSize: 100 }) //check page size and number of page to iterate
     newDocuments.results.forEach((element) => {
         index = table.findIndex(line => line.uid === element.uid && line.type === element.type && line.lang === element.lang);
-        console.log(table)
         table[index].new = element.id
     });
     return(table)
 }
-
 //Update all content relationship links in all new documents from old TYPE documentID to new documentId
 async function updateContentRelationships() {
 
