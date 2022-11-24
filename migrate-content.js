@@ -19,16 +19,16 @@ function migrateContent() {
           "content/export_old_docs",
           file
         ));
-        if (fileData.body) {
+        if (fileData.body) { // If it appears in logs.customtypes[ct].tabs (type is Slices and fieldset is Slice zone)
             fileData.body.forEach(function (slice) {
                 slice.value.variation = "default-slice";
             });
             const logs = JSON.parse(fs.readFileSync("./logs.json"));
-            const nSlice = logs.created?.filter(slice => slice.legacy_type === fileData.type);
+            const nSlice = logs.created?.filter(slice => slice.type === fileData.type);
             
             
             let str = JSON.stringify(fileData);
-            str = str.replace('"body":', '"slices":');
+            // str = str.replace('"body":', '"slices":'); // no need for that
             str = str.replaceAll('"repeat":', '"items":');
             str = str.replaceAll('"non-repeat":', '"primary":');
 

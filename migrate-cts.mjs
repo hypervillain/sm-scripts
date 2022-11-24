@@ -13,12 +13,12 @@ const HEADERS = {
 };
 
 var logs = {
-  merged: [],
-  created: []
-}
+  merged_slices: [],
+  created_slices: [],
+  slice_zones: []
+};
 
 const handleSlicezone = (sz, ct) => {
-
   return {
     ...sz,
     config: {
@@ -50,7 +50,9 @@ const handleSlicezone = (sz, ct) => {
             // );
 
             return [key, { type: "SharedSlice" }];
+
           } else {
+
             // Compare the slice model.json, if it has the same structure -> ignore
 
             let original = JSON.parse(
@@ -80,16 +82,16 @@ const handleSlicezone = (sz, ct) => {
             ) {
               var slice = {};
               slice["legacy_id"] = key;
-              slice["legacy_type"] = ct.id;
-              slice["merged_to_slice"] = `${key}`;
+              slice["type"] = ct.id;
+              slice["new_id"] = `${key}`;
 
-              logs.merged.push(slice);
+              logs.merged_slices.push(slice);
 
-              console.log("MERGED", logs);
+              // console.log("MERGED", slice);
 
               return [key, { type: "SharedSlice" }];
+
             } else {
-              console.log(`CREATE NEW SLICE CALLED ${key}_type_${ct.id}`);
 
               fs.mkdirSync(`./slices/${key}_type_${ct.id}`);
 
@@ -121,14 +123,16 @@ const handleSlicezone = (sz, ct) => {
 
               var slice = {};
               slice["legacy_id"] = key;
-              slice["legacy_type"] = ct.id;
+              slice["type"] = ct.id;
               slice["new_id"] = `${key}_type_${ct.id}`;
 
-              logs.created.push(slice);
+              logs.created_slices.push(slice);
 
-              console.log("CREATED", logs);
+              // console.log(`CREATE NEW SLICE CALLED ${key}_type_${ct.id}`);
+              // console.log("CREATED", slice);
 
               return [`${key}_type_${ct.id}`, { type: "SharedSlice" }];
+
             }
 
             // console.log(
@@ -151,7 +155,7 @@ const handleSlicezone = (sz, ct) => {
     .then((res) => res.json())
     .then((cts) => {
       let str = JSON.stringify(cts);
-      str = str.replaceAll('"body":', '"slices":');
+      // str = str.replaceAll('"body":', '"slices":'); // can remove, doesn't matter but remove in migrate-content as well
       cts = JSON.parse(str);
       fs.mkdirSync("./customtypes");
       fs.mkdirSync("./slices");
@@ -167,6 +171,15 @@ const handleSlicezone = (sz, ct) => {
                   Object.fromEntries(
                     Object.entries(tab).map(([fieldKey, field]) => {
                       if (field.type === "Slices") {
+
+                        // Add tabs slice zone to logs
+                        var slice_zone = {};
+                        slice_zone["type"] = ct.id;
+                        slice_zone["tab"] = tabKey;
+                        slice_zone["id"] = fieldKey;
+
+                        logs.slice_zones.push(slice_zone);
+
                         return [fieldKey, handleSlicezone(field, ct)];
                       }
                       return [fieldKey, field];
@@ -183,12 +196,9 @@ const handleSlicezone = (sz, ct) => {
           `./customtypes/${newCt.id}/index.json`,
           JSON.stringify(newCt, null, 2)
         );
-
-        // Create log file
-        fs.writeFileSync(
-          `./logs.json`,
-          JSON.stringify(logs, null, 2)
-        );
       });
+
+      // Create log file
+      fs.writeFileSync(`./logs.json`, JSON.stringify(logs, null, 2));
     });
 })();
