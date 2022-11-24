@@ -1,0 +1,474 @@
+{
+  "title": [
+    {
+      "type": "heading1",
+      "content": {
+        "text": "B2S homepage",
+        "spans": [
+          {
+            "start": 0,
+            "end": 12,
+            "type": "strong"
+          }
+        ]
+      }
+    }
+  ],
+  "banner_image": {
+    "origin": {
+      "id": "W2gO2iYAACQAWEJl",
+      "url": "https://prismic-io.s3.amazonaws.com/new-demo%2F852d354b-f9de-4f21-87db-665922c527ef_header.png",
+      "width": 3360,
+      "height": 1200
+    },
+    "width": 3360,
+    "height": 1200,
+    "url": "https://prismic-io.s3.amazonaws.com/new-demo/dcdceec3410a136c0918cfef96610981896f1d53_header.png",
+    "edit": {
+      "background": "transparent",
+      "zoom": 1,
+      "crop": {
+        "x": 0,
+        "y": 0
+      }
+    },
+    "credits": null,
+    "alt": null,
+    "provider": null,
+    "thumbnails": {}
+  },
+  "banner_text": [
+    {
+      "type": "paragraph",
+      "content": {
+        "text": "Coffee, reimagined. Enjoy your coffee like you never did before. We're disrupting the coffee industry, changing the way people order, drink and buy coffee forever.",
+        "spans": [
+          {
+            "start": 0,
+            "end": 19,
+            "type": "strong"
+          }
+        ]
+      }
+    },
+    {
+      "type": "paragraph",
+      "content": {
+        "text": "Powered by AI, blockchain, machine learning and SEO.",
+        "spans": []
+      }
+    }
+  ],
+  "slices": [
+    {
+      "key": "text_block$ca6735e0-5512-457e-a301-6d84285c7381",
+      "value": {
+        "items": [
+          {}
+        ],
+        "primary": {
+          "title1": [
+            {
+              "type": "heading2",
+              "content": {
+                "text": "Promotion Back to school",
+                "spans": []
+              }
+            }
+          ]
+        },
+        "variation": "default-slice"
+      }
+    },
+    {
+      "key": "featured_items$663332dd-9a56-442f-b466-1e06ccf8a800",
+      "value": {
+        "items": [
+          {
+            "link_to_product": {
+              "id": "WzZs0SkAACYAJq4F",
+              "wioUrl": "wio://documents/WzZs0SkAACYAJq4F"
+            }
+          },
+          {
+            "link_to_product": {
+              "id": "W1CloSkAACsAmfmv",
+              "wioUrl": "wio://documents/W1CloSkAACsAmfmv"
+            }
+          },
+          {
+            "link_to_product": {
+              "id": "WzZyDigAACcAj0sq",
+              "wioUrl": "wio://documents/WzZyDigAACcAj0sq"
+            }
+          },
+          {
+            "link_to_product": {
+              "id": "WzZyaSgAACoAj0zL",
+              "wioUrl": "wio://documents/WzZyaSgAACoAj0zL"
+            }
+          },
+          {
+            "link_to_product": {
+              "id": "W1Cl6SkAACsAmfrw",
+              "wioUrl": "wio://documents/W1Cl6SkAACsAmfrw"
+            }
+          },
+          {
+            "link_to_product": {
+              "id": "WzZyVCgAACgAj0xp",
+              "wioUrl": "wio://documents/WzZyVCgAACgAj0xp"
+            }
+          },
+          {
+            "link_to_product": {
+              "id": "WzZyWigAACYAj0yG",
+              "wioUrl": "wio://documents/WzZyWigAACYAj0yG"
+            }
+          },
+          {
+            "link_to_product": {
+              "id": "WzZycigAACgAj0z2",
+              "wioUrl": "wio://documents/WzZycigAACgAj0z2"
+            }
+          },
+          {
+            "link_to_product": {
+              "id": "WzZyRSgAACcAj0wk",
+              "wioUrl": "wio://documents/WzZyRSgAACcAj0wk"
+            }
+          },
+          {
+            "link_to_product": {
+              "id": "WzZs0SkAACYAJq4F",
+              "wioUrl": "wio://documents/WzZs0SkAACYAJq4F"
+            }
+          }
+        ],
+        "primary": {
+          "section_title": [
+            {
+              "type": "heading2",
+              "content": {
+                "text": "Our smart algorithms pick the most contextually relevant coffee ever possible",
+                "spans": []
+              }
+            }
+          ],
+          "button_label": [
+            {
+              "type": "paragraph",
+              "content": {
+                "text": "Visit shop",
+                "spans": []
+              }
+            }
+          ],
+          "button_link": {
+            "id": "W1Ca4ykAACkAmcvr",
+            "wioUrl": "wio://documents/W1Ca4ykAACkAmcvr"
+          }
+        },
+        "variation": "default-slice"
+      }
+    },
+    {
+      "key": "cta_banner$dabf7d1d-0c1e-4a6c-a6f6-cc0f08702c90",
+      "value": {
+        "items": [
+          {}
+        ],
+        "primary": {
+          "image_banner": {
+            "origin": {
+              "id": "W2gPECYAACQAWENU",
+              "url": "https://prismic-io.s3.amazonaws.com/new-demo%2F057e642a-e2bc-4492-8551-6b256fb70f62_story.png",
+              "width": 1330,
+              "height": 1330
+            },
+            "width": 1330,
+            "height": 1330,
+            "url": "https://prismic-io.s3.amazonaws.com/new-demo/8ba9576f3da591d0961227ec4a0506f4f6f566b7_story.png",
+            "edit": {
+              "background": "transparent",
+              "zoom": 1,
+              "crop": {
+                "x": 0,
+                "y": 0
+              }
+            },
+            "credits": null,
+            "alt": null,
+            "provider": null,
+            "thumbnails": {}
+          },
+          "banner_title": [
+            {
+              "type": "heading2",
+              "content": {
+                "text": "Our story",
+                "spans": []
+              }
+            }
+          ],
+          "banner_text": [
+            {
+              "type": "paragraph",
+              "content": {
+                "text": "It all started back in 1999, on a rainy September day.",
+                "spans": []
+              }
+            }
+          ],
+          "cta_label": "You'll never guess what happened next",
+          "cta_link": {
+            "url": "https://prismic.io",
+            "preview": null,
+            "target": "_blank"
+          }
+        },
+        "variation": "default-slice"
+      }
+    },
+    {
+      "key": "big_bullet_item$f00356b5-582b-4813-88b5-7c48b1278857",
+      "value": {
+        "items": [
+          {
+            "description_paragraph": [
+              {
+                "type": "paragraph",
+                "content": {
+                  "text": "Select some amazing coffee on our innovative HTML5 Web 3.0 website",
+                  "spans": []
+                }
+              }
+            ]
+          },
+          {
+            "description_paragraph": [
+              {
+                "type": "paragraph",
+                "content": {
+                  "text": "Place your order and pay for it using groundbreaking HTTPS security technology",
+                  "spans": []
+                }
+              },
+              {
+                "type": "paragraph",
+                "content": {
+                  "text": "(*Might take up to 14 days)",
+                  "spans": [
+                    {
+                      "start": 0,
+                      "end": 27,
+                      "type": "em"
+                    }
+                  ]
+                }
+              }
+            ]
+          },
+          {
+            "description_paragraph": [
+              {
+                "type": "paragraph",
+                "content": {
+                  "text": "Wait for the blazing fast delivery* thanks to our world-class partners",
+                  "spans": []
+                }
+              }
+            ]
+          }
+        ],
+        "primary": {
+          "title_section": [
+            {
+              "type": "heading2",
+              "content": {
+                "text": "How it works",
+                "spans": []
+              }
+            }
+          ]
+        },
+        "variation": "default-slice"
+      },
+      "label": "three-per-line"
+    },
+    {
+      "key": "separator$95a73315-0193-4b11-a996-27a5df5add82",
+      "value": {
+        "items": [
+          {}
+        ],
+        "primary": {},
+        "variation": "default-slice"
+      }
+    },
+    {
+      "key": "text_block$8e98ac4d-c33d-41ce-9639-33674df1c5a7",
+      "value": {
+        "items": [
+          {}
+        ],
+        "primary": {
+          "title1": [
+            {
+              "type": "heading2",
+              "content": {
+                "text": "Philosophy",
+                "spans": []
+              }
+            }
+          ],
+          "paragraph": [
+            {
+              "type": "paragraph",
+              "content": {
+                "text": "We believe that having a good cup of coffee in the morning is the most important thing in the world. We're committed to working hard and applying the advanced modern-day technology to bring you the best coffee there is.",
+                "spans": []
+              }
+            }
+          ]
+        },
+        "variation": "default-slice"
+      }
+    }
+  ],
+  "display_name": [
+    {
+      "type": "heading1",
+      "content": {
+        "text": "Homepage",
+        "spans": []
+      }
+    }
+  ],
+  "meta_title": [
+    {
+      "type": "heading1",
+      "content": {
+        "text": "Disrupt Coffee",
+        "spans": []
+      }
+    }
+  ],
+  "meta_description": [
+    {
+      "type": "paragraph",
+      "content": {
+        "text": "Disrupt Coffee",
+        "spans": []
+      }
+    }
+  ],
+  "social": [
+    {
+      "key": "twitter_card$86344a1d-55da-4a5c-a76f-368bcd851a92",
+      "value": {
+        "items": [
+          {}
+        ],
+        "primary": {
+          "twitter_title": [
+            {
+              "type": "paragraph",
+              "content": {
+                "text": "Title for Twitter Card",
+                "spans": []
+              }
+            }
+          ],
+          "twitter_description": [
+            {
+              "type": "paragraph",
+              "content": {
+                "text": "Description for Twitter Card",
+                "spans": []
+              }
+            }
+          ],
+          "twitter_image": {
+            "origin": {
+              "id": "W2gO2iYAACQAWEJl",
+              "url": "https://prismic-io.s3.amazonaws.com/new-demo%2F852d354b-f9de-4f21-87db-665922c527ef_header.png",
+              "width": 3360,
+              "height": 1200
+            },
+            "width": 1200,
+            "height": 675,
+            "url": "https://prismic-io.s3.amazonaws.com/new-demo/e16e04e21d8bbf23064eb7458f28859eb36338d9_header.png",
+            "edit": {
+              "background": "transparent",
+              "zoom": 0.5625,
+              "crop": {
+                "x": -345,
+                "y": 0
+              }
+            },
+            "credits": null,
+            "alt": null,
+            "provider": null,
+            "thumbnails": {}
+          }
+        }
+      }
+    },
+    {
+      "key": "open_graph$0338655f-987a-41eb-8b3e-3bc5361df721",
+      "value": {
+        "items": [
+          {}
+        ],
+        "primary": {
+          "og_title": [
+            {
+              "type": "paragraph",
+              "content": {
+                "text": "Title for Open Graph",
+                "spans": []
+              }
+            }
+          ],
+          "og_description": [
+            {
+              "type": "paragraph",
+              "content": {
+                "text": "Description for Open Graph",
+                "spans": []
+              }
+            }
+          ],
+          "og_image": {
+            "origin": {
+              "id": "W2gO2iYAACQAWEJl",
+              "url": "https://prismic-io.s3.amazonaws.com/new-demo%2F852d354b-f9de-4f21-87db-665922c527ef_header.png",
+              "width": 3360,
+              "height": 1200
+            },
+            "width": 1200,
+            "height": 628,
+            "url": "https://prismic-io.s3.amazonaws.com/new-demo/929b24deaf8d4b8e09a199ef2696addddf300d78_header.png",
+            "edit": {
+              "background": "transparent",
+              "zoom": 0.5233333333333333,
+              "crop": {
+                "x": -279,
+                "y": 0
+              }
+            },
+            "credits": null,
+            "alt": null,
+            "provider": null,
+            "thumbnails": {}
+          }
+        }
+      }
+    }
+  ],
+  "type": "homepage",
+  "tags": [],
+  "lang": "en-us",
+  "grouplang": "WzNOVikAAJ5A5EjS"
+}

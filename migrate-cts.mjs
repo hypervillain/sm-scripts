@@ -12,12 +12,12 @@ const HEADERS = {
   Authorization: `Bearer ${auth}`,
 };
 
-const handleSlicezone = (sz, ct) => {
+var logs = {
+  merged: [],
+  created: []
+}
 
-  let changes = {
-    merged : [],
-    created : [],
-  };
+const handleSlicezone = (sz, ct) => {
 
   return {
     ...sz,
@@ -28,30 +28,28 @@ const handleSlicezone = (sz, ct) => {
           // If slice folder doesn't exist create it
           if (!fs.existsSync(`./slices/${key}`)) {
             fs.mkdirSync(`./slices/${key}`);
-              let data = JSON.stringify(
-                {
-                  ...migrate.default(
-                    val,
-                    { sliceName: key, from: "slices" },
-                    { cwd: "./" },
-                    false
-                    ).model,
-                    migrated: undefined,
-                  },
-                  null,
-                  2
-                  );
+            let data = JSON.stringify(
+              {
+                ...migrate.default(
+                  val,
+                  { sliceName: key, from: "slices" },
+                  { cwd: "./" },
+                  false
+                ).model,
+                migrated: undefined,
+              },
+              null,
+              2
+            );
 
-           fs.writeFileSync(`./slices/${key}/model.json`, data);
+            fs.writeFileSync(`./slices/${key}/model.json`, data);
 
-            
             // Create slice index.js, need to write the teplate file as well or is it in slicemachine ui ?
             // fs.writeFileSync(
             //   `./slices/${key}/index.js`,
             // );
 
             return [key, { type: "SharedSlice" }];
-
           } else {
             // Compare the slice model.json, if it has the same structure -> ignore
 
@@ -67,7 +65,7 @@ const handleSlicezone = (sz, ct) => {
                 false
               ).model,
             };
-            
+
             if (
               _.isEqual(duplicate.id, original.id) &&
               _.isEqual(duplicate.name, original.name) &&
@@ -80,10 +78,16 @@ const handleSlicezone = (sz, ct) => {
                 original.variations[0].items
               )
             ) {
-              return [key, { type: "SharedSlice" }];
-              // changes.merged.push(
+              var slice = {};
+              slice["legacy_id"] = key;
+              slice["legacy_type"] = ct.id;
+              slice["merged_to_slice"] = `${key}`;
 
-              // )
+              logs.merged.push(slice);
+
+              console.log("MERGED", logs);
+
+              return [key, { type: "SharedSlice" }];
             } else {
               console.log(`CREATE NEW SLICE CALLED ${key}_type_${ct.id}`);
 
@@ -113,10 +117,16 @@ const handleSlicezone = (sz, ct) => {
                 `\"name\": \"${key}_type_${ct.id}\"`
               );
 
-              fs.writeFileSync(
-                `./slices/${key}_type_${ct.id}/model.json`,
-                str
-              );
+              fs.writeFileSync(`./slices/${key}_type_${ct.id}/model.json`, str);
+
+              var slice = {};
+              slice["legacy_id"] = key;
+              slice["legacy_type"] = ct.id;
+              slice["new_id"] = `${key}_type_${ct.id}`;
+
+              logs.created.push(slice);
+
+              console.log("CREATED", logs);
 
               return [`${key}_type_${ct.id}`, { type: "SharedSlice" }];
             }
@@ -143,7 +153,7 @@ const handleSlicezone = (sz, ct) => {
       let str = JSON.stringify(cts);
       str = str.replaceAll('"body":', '"slices":');
       cts = JSON.parse(str);
-      fs.mkdirSync('./customtypes')
+      fs.mkdirSync("./customtypes");
       fs.mkdirSync("./slices");
 
       cts.forEach((ct) => {
@@ -168,8 +178,17 @@ const handleSlicezone = (sz, ct) => {
           })(),
         };
 
-        fs.mkdirSync(`./customtypes/${newCt.id}`)
-        fs.writeFileSync(`./customtypes/${newCt.id}/index.json`, JSON.stringify(newCt, null, 2))
+        fs.mkdirSync(`./customtypes/${newCt.id}`);
+        fs.writeFileSync(
+          `./customtypes/${newCt.id}/index.json`,
+          JSON.stringify(newCt, null, 2)
+        );
+
+        // Create log file
+        fs.writeFileSync(
+          `./logs.json`,
+          JSON.stringify(logs, null, 2)
+        );
       });
     });
 })();
