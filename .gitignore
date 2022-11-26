@@ -1,7 +1,7 @@
 node_modules
 _DS*
 .DS*
-customtypes
-slices
+migrated
+exports
 
 .env
