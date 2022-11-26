@@ -15,7 +15,7 @@ const HEADERS = {
 var logs = {
   merged_slices: [],
   created_slices: [],
-  slice_zones: []
+  slice_zones: [],
 };
 
 const handleSlicezone = (sz, ct) => {
@@ -26,8 +26,8 @@ const handleSlicezone = (sz, ct) => {
       choices: Object.fromEntries(
         Object.entries(sz.config.choices).map(([key, val]) => {
           // If slice folder doesn't exist create it
-          if (!fs.existsSync(`./slices/${key}`)) {
-            fs.mkdirSync(`./slices/${key}`);
+          if (!fs.existsSync(`./migrated/slices/${key}`)) {
+            fs.mkdirSync(`./migrated/slices/${key}`);
             let data = JSON.stringify(
               {
                 ...migrate.default(
@@ -42,21 +42,18 @@ const handleSlicezone = (sz, ct) => {
               2
             );
 
-            fs.writeFileSync(`./slices/${key}/model.json`, data);
+            fs.writeFileSync(`./migrated/slices/${key}/model.json`, data);
 
-            // Create slice index.js, need to write the teplate file as well or is it in slicemachine ui ?
+            // Create slice index.js, need to write the template file as well or is it in slicemachine ui ?
             // fs.writeFileSync(
-            //   `./slices/${key}/index.js`,
+            //   `./migrated/slices/${key}/index.js`, ''
             // );
 
             return [key, { type: "SharedSlice" }];
-
           } else {
-
             // Compare the slice model.json, if it has the same structure -> ignore
-
             let original = JSON.parse(
-              fs.readFileSync(`./slices/${key}/model.json`)
+              fs.readFileSync(`./migrated/slices/${key}/model.json`)
             );
 
             let duplicate = {
@@ -80,6 +77,7 @@ const handleSlicezone = (sz, ct) => {
                 original.variations[0].items
               )
             ) {
+              // Add merged slice to logs
               var slice = {};
               slice["legacy_id"] = key;
               slice["type"] = ct.id;
@@ -87,13 +85,14 @@ const handleSlicezone = (sz, ct) => {
 
               logs.merged_slices.push(slice);
 
-              // console.log("MERGED", slice);
+              console.log(
+                "SLICE MERGED",
+                `\nSlice ${key} from ${ct.id} has the same name, id and structure as migrated slice ${key}, so it has been merged in ${key}.\nNo action required on data models or content.\n\n`
+              );
 
               return [key, { type: "SharedSlice" }];
-
             } else {
-
-              fs.mkdirSync(`./slices/${key}_type_${ct.id}`);
+              fs.mkdirSync(`./migrated/slices/${key}_type_${ct.id}`);
 
               let str = JSON.stringify(
                 {
@@ -119,8 +118,12 @@ const handleSlicezone = (sz, ct) => {
                 `\"name\": \"${key}_type_${ct.id}\"`
               );
 
-              fs.writeFileSync(`./slices/${key}_type_${ct.id}/model.json`, str);
+              fs.writeFileSync(
+                `./migrated/slices/${key}_type_${ct.id}/model.json`,
+                str
+              );
 
+              // Add new slice to logs
               var slice = {};
               slice["legacy_id"] = key;
               slice["type"] = ct.id;
@@ -128,19 +131,13 @@ const handleSlicezone = (sz, ct) => {
 
               logs.created_slices.push(slice);
 
-              // console.log(`CREATE NEW SLICE CALLED ${key}_type_${ct.id}`);
-              // console.log("CREATED", slice);
+              console.log(
+                "SLICE CREATED",
+                `\nSlice ${key} already exists but doesn't have the same structure as the slice being migrated.\nIt will be named ${key}_type_${ct.id} and will be renamed during content migration as well.\nIf you wish to merge those slices, you can create a variation in /slices/${key}/model.json for ${key}_type_${ct.id}.\To make a variation of ${key}_type_${ct.id} in /slices/${key}/model.json, see section After data model migration in the Migration guide\n\n`
+              );
 
               return [`${key}_type_${ct.id}`, { type: "SharedSlice" }];
-
             }
-
-            // console.log(
-            //   `Slice ${key} already exist in type ${ct.label}, ID: ${ct.id} \nAction you can take: `,
-            //   `\n - To make a variation of ${key}_type_${ct.id} in /slices/${key}, follow the Migration guide before deleting /slices/${key}_type_${ct.label}`,
-            // );
-
-            //
           }
         })
       ),
@@ -155,10 +152,12 @@ const handleSlicezone = (sz, ct) => {
     .then((res) => res.json())
     .then((cts) => {
       let str = JSON.stringify(cts);
-      // str = str.replaceAll('"body":', '"slices":'); // can remove, doesn't matter but remove in migrate-content as well
+      str = str.replaceAll('"body":', '"slices":'); // This line can be removed, but if so, you need to remove it from migrate-content.js as well
       cts = JSON.parse(str);
-      fs.mkdirSync("./customtypes");
-      fs.mkdirSync("./slices");
+      fs.mkdirSync("./migrated/customtypes", { recursive: true }); // Will contain your migrated custom types. This folder and its content will be copied and pasted into your new slice machine project
+      fs.mkdirSync("./migrated/slices"); // Will contain your migrated slices. This folder and its content will be copied and pasted into your new slice machine project
+      fs.mkdirSync("./exports/legacy_docs", { recursive: true }); // Will contain the exported legacy files
+      fs.mkdirSync("./exports/sm_docs"); // Will contain the exported slice machine content files for link maping
 
       cts.forEach((ct) => {
         const newCt = {
@@ -171,8 +170,7 @@ const handleSlicezone = (sz, ct) => {
                   Object.fromEntries(
                     Object.entries(tab).map(([fieldKey, field]) => {
                       if (field.type === "Slices") {
-
-                        // Add tabs slice zone to logs
+                        // Add tab Slice zone to logs
                         var slice_zone = {};
                         slice_zone["type"] = ct.id;
                         slice_zone["tab"] = tabKey;
@@ -191,14 +189,15 @@ const handleSlicezone = (sz, ct) => {
           })(),
         };
 
-        fs.mkdirSync(`./customtypes/${newCt.id}`);
+        fs.mkdirSync(`./migrated/customtypes/${newCt.id}`); // contains your SM supported custom type
+
         fs.writeFileSync(
-          `./customtypes/${newCt.id}/index.json`,
+          `./migrated/customtypes/${newCt.id}/index.json`,
           JSON.stringify(newCt, null, 2)
         );
       });
 
       // Create log file
-      fs.writeFileSync(`./logs.json`, JSON.stringify(logs, null, 2));
+      fs.writeFileSync(`./migrated/logs.json`, JSON.stringify(logs, null, 2));
     });
 })();
