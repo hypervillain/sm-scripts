@@ -1,3 +1,7 @@
+These scripts were built by Prismic SE team to help customers migrate their repository from legacy to Slice Machine.<br/>
+The guide still needs to be thouroully tested.
+
+<br/>
 
 - [Introduction of the step by step guide](#introduction-of-the-step-by-step-guide)
   - [What are the differences between a legacy project and a slice machine project](#what-are-the-differences-between-a-legacy-project-and-a-slice-machine-project)
@@ -296,8 +300,8 @@ The final step of the project migration is to map your old links with the new on
 - Make sure all your react components in the correct `slice/ExampleSlice/index.js` file.
     - You will need to create an `index.js` file in each slice folder.  This step can be done after the whole migration project is done. Copy and paste your existing components in the `index.js` or build it from scratch using the slice simulator.
 - Also don’t forget to update the components that use slices variations.
-- Update your imports
-    - If you copied your components and pages, make sure the dependencies that you import are [the ones installed when you set up your NextJS project](https://prismic.io/docs/setup-nextjs#run-setup-command)
+- Update your packages
+    - If you copied your original components and pages to your new project, make sure the imported dependencies are the latest ones ([installed during the project set up](https://prismic.io/docs/setup-nextjs#run-setup-command).)
 
 ### If you want to create variations
 
