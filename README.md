@@ -210,35 +210,35 @@ In your legacy project (in production or in an environment), make sure all the d
         
         ```jsx
         export const homeArticlesGraphQuery =`
-                {
-                    homepage {
-                        slices {
-                            ...on featured_articles {
-                                variation {
-                                    ...on withContentRelationship {
-                                        items {
-                                            linked_article {
-                                                ...on blog_article {
-                                                    ...blog_articleFields
-                                                    author {
-                                                        ...on author {
-                                                            name
-                                                            image
-                                                        }
-                                                    }
+        {
+            homepage {
+                slices {
+                    ...on featured_articles {
+                        variation {
+                            ...on withContentRelationship {
+                                items {
+                                    linked_article {
+                                        ...on blog_article {
+                                            ...blog_articleFields
+                                            author {
+                                                ...on author {
+                                                    name
+                                                    image
                                                 }
                                             }
                                         }
-                                        primary {
-                                            ...primaryFields
-                                        }
                                     }
+                                }
+                                primary {
+                                    ...primaryFields
                                 }
                             }
                         }
                     }
                 }
-                `
+            }
+        }
+        `
         ```
 
 <br/>
@@ -311,31 +311,31 @@ The final step of the project migration is to map your old links with the new on
     
     ```json
     {
-    		"id": "hero_section",
-    		...
-    		"variations": [
-    				{
-    			      "id": "default",
-    						...
-    						"primary": {...},
-    						"items": {...},
-    						"imageUrl": "https://images.prismic.io/slice-machine/..."
-    				},
-    				{
-    			      "id": "withTwoCtas", 
-    						...
-    						"primary": {...},
-    						"items": {...},
-    						"imageUrl": "https://images.prismic.io/slice-machine/..."
-    				},
-    				{
-    			      "id": "withoutCta",
-    						...
-    						"primary": {...},
-    						"items": {...},
-    						"imageUrl": "https://images.prismic.io/slice-machine/..."
-    				}
-    		]
+        "id": "hero_section",
+        ...
+        "variations": [
+            {
+                "id": "default",
+                    ...
+                    "primary": {...},
+                    "items": {...},
+                    "imageUrl": "https://images.prismic.io/slice-machine/..."
+            },
+            {
+                "id": "withTwoCtas", 
+                    ...
+                    "primary": {...},
+                    "items": {...},
+                    "imageUrl": "https://images.prismic.io/slice-machine/..."
+            },
+            {
+                "id": "withoutCta",
+                    ...
+                    "primary": {...},
+                    "items": {...},
+                    "imageUrl": "https://images.prismic.io/slice-machine/..."
+            }
+        ]
     }
     ```
     
