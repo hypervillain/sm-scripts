@@ -1,5 +1,5 @@
 These scripts were built by Prismic SE team to help customers migrate their repository from legacy to Slice Machine.<br/>
-The guide still needs to be thouroully tested.
+The guide still needs to be thoroughly tested.
 
 <br/>
 
