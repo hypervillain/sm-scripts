@@ -294,9 +294,6 @@ The final step of the project migration is to map your old links with the new on
 # After Migration
 
 ## Update your code
-- Make sure your components are not using  `non-repeat`, or `repeat`  objects. If you find occurrences, replace them the same way it was done for GraphQuery queries.
-    - `non-repeat` ⇒ `primary`
-    - `repeat` ⇒ `items`
 - Make sure all your react components in the correct `slice/ExampleSlice/index.js` file.
     - You will need to create an `index.js` file in each slice folder.  This step can be done after the whole migration project is done. Copy and paste your existing components in the `index.js` or build it from scratch using the slice simulator.
 - Also don’t forget to update the components that use slices variations.
