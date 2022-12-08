@@ -9,7 +9,7 @@
   "author": "",
   "license": "ISC",
   "dependencies": {
-    "@prismicio/client": "^5.1.0",
+    "@prismicio/client": "^6.7.1",
     "archiver": "^5.3.0",
     "dotenv": "^10.0.0",
     "node-fetch": "^3.0.0",
