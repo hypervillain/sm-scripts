@@ -58,6 +58,7 @@ function migrateContent() {
           // If locales exists, handle file name
           if (fileData.grouplang) {
 
+            // Replace underscores if they exist in the grouplang or import will fail
             if (fileData.grouplang.includes("_")){
               console.log(fileData.grouplang.includes("_"), fileData.grouplang);
               let lang = JSON.stringify(fileData.grouplang).replaceAll("_", "-");

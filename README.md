@@ -163,39 +163,7 @@ In your legacy project (in production or in an environment), make sure all the d
 
 1. Export your content from the original legacy repository
 2. Place the unziped files in `exports/legacy_docs`
-
-<br/>
-
-3. If you have multiple locales, make sure your `grouplang` values don’t contain any underscore otherwise the import tool will return errors.
-    1. Look for the grouplang. Its value is a 16 characters identifier that links the documents different locales.
-        
-       ```json
-       "grouplang": "W0StJykAACsAZZJ7"
-       ```
-                
-    2. If its value has an underscore, replace it with another character
-
-        ```json
-        "grouplang": "Y01_exQAACYAOCQO"
-        ```
-        Will generate an a document called new_Y01_exQAACYAOCQO_en-us. That document won't be able to be imported in your Prismic repository
-
-        You can avoid the impirt error by replacing it with an other value
-
-        ```json
-        "grouplang": "Y01aexQAACYAOCQO"
-        ```
-         Will generate an a document called new_Y01aexQAACYAOCQO_en-us.
-        
-    3. Make sure this value is replaced in every translation
-        - new_Y01aexQAACYAOCQO_en-us
-        - new_Y01aexQAACYAOCQO_en-uk
-        - new_Y01aexQAACYAOCQO_fr-fr
-        - new_Y01aexQAACYAOCQO_fr-be
-
-<br/>
-
-4. Run `node migrate-content.js`
+3. Run `node migrate-content.js`
 
 <br/>
 
@@ -258,16 +226,6 @@ The final step of the project migration is to map your old links with the new on
 
 - After migrating your content you’ll notice in the editing platform that all internal links are broken. That’s because the links are based on the legacy project documents ID.
 - The last script reconciles the documents by building a comparison table between document types then updates the internal links.
-- The migrated document imported in your new repository are queried. If you have more than 20 documents, you will need to update the query with the pageSize : [https://prismic.io/docs/rest-api-technical-reference#pagesize](https://prismic.io/docs/rest-api-technical-reference#pagesize)
-
-    ```jsx
-    const newDocuments = await Prismic.client(newRepoApiEndpoint).query("", {
-        lang: "*",
-        pageSize: 100,
-    }); //check page size and number of page to iterate
-    ```
-
-- If you have more than 100 documents, you will also need to iterate through the pages : [https://prismic.io/docs/rest-api-technical-reference#page](https://prismic.io/docs/rest-api-technical-reference#page)
 
 <br/>
 
@@ -282,9 +240,10 @@ The final step of the project migration is to map your old links with the new on
 
 ## After links migration
 
-1. Import  `migrated/content/links.zip` in your slice machine repository. This will create a release containing your documents with the new links. There’s no need to delete the documents that are already published.
+- If you want to check the documents, you will find all migrated files in `migrated/content/linked_files`.
+- If you have more than 200 documents to import, you will need to create multiple zip files to import them in your Prismic repository.
 
-    You can check the documents migrated in `migrated/content/linked_files`
+1. Import  `migrated/content/links.zip` in your slice machine repository. This will create a release containing your documents with the new links. There’s no need to delete the documents that are already published.
 
 
 2. Check the generated release that all links are not broken. You can check each file or preview the release to do so.
