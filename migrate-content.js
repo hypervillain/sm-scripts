@@ -57,6 +57,14 @@ function migrateContent() {
 
           // If locales exists, handle file name
           if (fileData.grouplang) {
+
+            if (fileData.grouplang.includes("_")){
+              console.log(fileData.grouplang.includes("_"), fileData.grouplang);
+              let lang = JSON.stringify(fileData.grouplang).replaceAll("_", "-");
+              fileData.grouplang = JSON.parse(lang);
+              console.log(lang, "NEW FILE", fileData.grouplang)
+            }
+
             fs.writeFile(
               path.join(
                 __dirname,
