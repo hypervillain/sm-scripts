@@ -258,6 +258,9 @@ The final step of the project migration is to map your old links with the new on
 - Also don’t forget to update the components that use slices variations.
 - Update your packages
     - If you copied your original components and pages to your new project, make sure the imported dependencies are the latest ones ([installed during the project set up](https://prismic.io/docs/setup-nextjs#run-setup-command).)
+    - Package migration guides :
+      - https://prismic.io/docs/prismic-client-v6-migration-guide
+      - https://prismic.io/docs/prismic-react-v2-migration-guide
 
 ### If you want to create variations
 
