@@ -31,6 +31,7 @@ async function getComparisonTable() {
 
   let table = [{ type: null, uid: null, old: null, new: null, lang: null }];
 
+  // Get all documents with dangerouslyGetAll
   const oldDocuments = await oldClient.dangerouslyGetAll({ lang: "*" });
 
   let i = 0;

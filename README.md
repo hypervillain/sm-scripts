@@ -226,6 +226,7 @@ The final step of the project migration is to map your old links with the new on
 
 - After migrating your content you’ll notice in the editing platform that all internal links are broken. That’s because the links are based on the legacy project documents ID.
 - The last script reconciles the documents by building a comparison table between document types then updates the internal links.
+- If you have a lot of documents, be careful, the script is using getDangerouslyAll method that returns all of your documents.
 
 <br/>
 
