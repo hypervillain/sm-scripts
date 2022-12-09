@@ -1,29 +1,42 @@
-const Prismic = require("@prismicio/client");
-const dotenv = require("dotenv");
-const fs = require("fs");
-const path = require("path");
-const archiver = require("archiver");
+import * as prismic from "@prismicio/client";
+import fs from "fs";
+import dotenv from "dotenv";
+import fetch from "node-fetch";
+import path from "path";
+import archiver from "archiver";
+import { fileURLToPath } from "url";
+import { createRequire } from 'module';
+
+const require = createRequire(import.meta.url);
 
 dotenv.config();
 
-// Query Old and new repos
-const oldRepoApiEndpoint = `https://${process.env.REPO}.cdn.prismic.io/api/v2`;
-const newRepoApiEndpoint = `https://${process.env.NEWREPO}.cdn.prismic.io/api/v2`;
+// Query old and new repos
+const oldClient = prismic.createClient(
+  `https://${process.env.REPO}.cdn.prismic.io/api/v2`,
+  { fetch }
+);
 
+const newClient = prismic.createClient(
+  `https://${process.env.NEWREPO}.cdn.prismic.io/api/v2`,
+  { fetch }
+);
+
+const __filename = fileURLToPath(import.meta.url);
+const __dirname = path.dirname(__filename);
 const directoryPath = path.join(__dirname, "exports/sm_docs");
 
-//build a type comparison table between old documents and new document
+// Build a type comparison table between old documents and new document
 async function getComparisonTable() {
+
   let table = [{ type: null, uid: null, old: null, new: null, lang: null }];
 
-  const oldDocuments = await Prismic.client(oldRepoApiEndpoint).query("", {
-    lang: "*",
-    pageSize: 100,
-  }); //check page size and number of page to iterate
+  // Get all documents with dangerouslyGetAll
+  const oldDocuments = await oldClient.dangerouslyGetAll({ lang: "*" });
 
   let i = 0;
 
-  oldDocuments.results.forEach((element) => {
+  oldDocuments.forEach((element) => {
     table[i] = {};
     table[i].type = element.type;
     table[i].uid = element.uid;
@@ -32,13 +45,10 @@ async function getComparisonTable() {
     i++;
   });
 
-  const newDocuments = await Prismic.client(newRepoApiEndpoint).query("", {
-    lang: "*",
-    pageSize: 100,
-  }); //check page size and number of page to iterate
+  const newDocuments = await newClient.dangerouslyGetAll({ lang: "*" });
 
-  newDocuments.results.forEach((element) => {
-    index = table.findIndex(
+  newDocuments.forEach((element) => {
+    const index = table.findIndex(
       (line) =>
         line.uid === element.uid &&
         line.type === element.type &&
@@ -57,24 +67,29 @@ async function updateContentRelationships() {
     if (err) {
       return console.log("Unable to scan directory: " + err);
     }
+
     //listing all files
     files.forEach(function (file) {
       if (!file.startsWith(".")) {
+
         const fileData = require(path.join(__dirname, "exports/sm_docs", file));
-        //look for CR links in primary section
+
+        // Look for CR links in primary section
         Object.keys(fileData).forEach(function (field) {
+
           if (fileData[field].wioUrl !== undefined) {
-            newContentId = comparisonTable.find(
+            let newContentId = comparisonTable.find(
               (item) => item.old === fileData[field].id
             ).new;
             fileData[field].wioUrl = "wio://documents/" + newContentId;
             fileData[field].id = newContentId;
           }
+
           if (Array.isArray(fileData[field])) {
             fileData[field].forEach(function (subField, index) {
               Object.keys(fileData[field][index]).forEach(function (subField) {
                 if (fileData[field][index][subField].wioUrl !== undefined) {
-                  newContentId = comparisonTable.find(
+                  let newContentId = comparisonTable.find(
                     (item) => item.old === fileData[field][index][subField].id
                   ).new;
                   fileData[field][index][subField].wioUrl =
@@ -84,12 +99,14 @@ async function updateContentRelationships() {
               });
             });
           }
+
         });
-        // look for CR links in slices
+
+        // Look for CR links in slices
         fileData.slices?.forEach(function (slice) {
           Object.keys(slice.value.primary).forEach(function (field) {
             if (slice.value.primary[field].wioUrl !== undefined) {
-              newContentId = comparisonTable.find(
+              let newContentId = comparisonTable.find(
                 (item) => item.old === slice.value.primary[field].id
               ).new;
               slice.value.primary[field].wioUrl =
@@ -100,7 +117,7 @@ async function updateContentRelationships() {
           slice.value.items.forEach(function (field, index) {
             Object.keys(slice.value.items[index]).forEach(function (subField) {
               if (slice.value.items[index][subField].wioUrl !== undefined) {
-                newContentId = comparisonTable.find(
+                let newContentId = comparisonTable.find(
                   (item) => item.old === slice.value.items[index][subField].id
                 ).new;
                 slice.value.items[index][subField].wioUrl =
