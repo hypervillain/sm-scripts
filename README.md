@@ -3,34 +3,10 @@ The guide still needs to be thoroughly tested.
 
 <br/>
 
-- [Introduction of the step by step guide](#introduction-of-the-step-by-step-guide)
-  - [What are the differences between a legacy project and a slice machine project](#what-are-the-differences-between-a-legacy-project-and-a-slice-machine-project)
-  - [Advantages of migrating to Slice Machine](#advantages-of-migrating-to-slice-machine)
-  - [Information to know](#information-to-know)
-- [Before migration](#before-migration)
-  - [Set up a new Slice Machine project](#set-up-a-new-slice-machine-project)
-  - [Preparing your data models](#preparing-your-data-models)
-- [Step 1 : Data model migration](#step-1--data-model-migration)
-  - [What does the script do](#what-does-the-script-do)
-  - [Data models migration steps](#data-models-migration-steps)
-  - [After data model migration](#after-data-model-migration)
-- [Step 2 : Migrate your content](#step-2--migrate-your-content)
-  - [What does this script do](#what-does-this-script-do)
-  - [Content migration steps](#content-migration-steps)
-  - [After content migration](#after-content-migration)
-- [Step 3 : Migrate your links](#step-3--migrate-your-links)
-  - [What does this script do](#what-does-this-script-do-1)
-  - [Migration steps](#migration-steps)
-  - [After links migration](#after-links-migration)
-- [After Migration](#after-migration)
-  - [Update your code](#update-your-code)
-    - [If you want to create variations](#if-you-want-to-create-variations)
-  - [Check your content](#check-your-content)
-
-
-# Introduction of the step by step guide
-
-## What are the differences between a legacy project and a slice machine project
+<details>
+    <summary>
+        What are the differences between a legacy project and a slice machine project
+    </summary>
 
 - Data models
     - Slices are shared between custom types
@@ -40,9 +16,13 @@ The guide still needs to be thoroughly tested.
 - Slice simulator
     - This is a features that previews your slice’s component as you update it in that’s slice `index.js`
     - It also enables screenshots of the component to be taken. The screenshot is then displayed in the slice library and in the editing platform
-    
 
-## Advantages of migrating to Slice Machine
+</details>
+
+<details>
+    <summary>
+        Advantages of migrating to Slice Machine
+    </summary>
 
 - SliceMachine is the new way to build with Prismic, so using it will give access to new features and updates
 - Slices are unified, they do not depend on a custom type
@@ -51,7 +31,12 @@ The guide still needs to be thoroughly tested.
     - It becomes easier to follow your git workflow, you can version your slices
     - You can locally build your slice from scratch and iterate fast before delivering it by using the slice simulator
 
-## Information to know
+</details> 
+
+<details>
+    <summary>
+        Information to keep in mind
+    </summary>
 
 - To migrate your project, your future project **must use Next.js or Nuxt.js** as they are currently (Nov 2022) the only frameworks supported by Slice Machine.
 - This guide will walk you through the migration of a project using Next.js (would be the same with Nuxt.js).
@@ -73,35 +58,57 @@ The guide still needs to be thoroughly tested.
     
     With this migration you’re not affecting your production website, you are just extracting data models and content from your production repository.
 
+</details> 
 
 <br/>
 <br/>
+
+In this guide :
+- [Before migration](#before-migration)
+- [Step 1 : Data model migration](#step-1--data-model-migration)
+- [Step 2 : Migrate your content](#step-2--migrate-your-content)
+- [Step 3 : Migrate your links](#step-3--migrate-your-links)
+- [After Migration](#after-migration)
+
+<br/>
+<br/>
+
 
 # Before migration
+<details>
+    <summary>
+        Set up a new Slice Machine project
+    </summary>
 
-## Set up a new Slice Machine project
-
-1. Create a new NextJS project
-2. [Set up Prismic](https://prismic.io/docs/technologies/setup-nextjs) and Slice Machine, in this process you will also create a new repository in your Prismic dashboard
-3. Check your configuration :
+  1. Create a new NextJS project
+  2. [Set up Prismic](https://prismic.io/docs/technologies/setup-nextjs) and Slice Machine, in this process you will also create a new repository in your Prismic dashboard
+  3. Check your configuration :
     - If you have **locales** in the legacy project, create the exact same in your new project
     - If you have **integration fields**, make sure to create the same integration fields in your new repository (same name)
 
-<br/>
+</details>
 
-## Preparing your data models
+<details>
+    <summary>
+    Preparing your data models
+    </summary>
 
 In your legacy project (in production or in an environment), make sure all the documents are identifiable so internal links can be reconciled.
 - Every repeatable custom type must have a UID field set and filled in the associated documents.
 - If UIDs are missing, links won’t be able to be migrated and you will have to manually map and reintegrate them after the process.
 - Note: You can also use another field for reconciliation (you need to edit the script) but UID guarantees uniqueness, though it is recommended
 
+</details>
+
 <br/>
 <br/>
 
 # Step 1 : Data model migration
 
-## What does the script do
+<details>
+    <summary>
+    What does the script do
+    </summary>
 
 - In this part, you will migrate your slices and custom types
 - The script fetches your data models and outputs them in a a format supported by Slice Machine
@@ -113,10 +120,12 @@ In your legacy project (in production or in an environment), make sure all the d
         - If they do not share the same structure, name and ID, a whole new slice will be created in `/slices/{key}-type_{ct.label}`, named with its id and its type id (`slice_id_type_type_id`)
         - You can then either keep them separated or  create variations after migration - See [After data model migration](After%20data%20model%20migration%208cd83fb834094d31b605cfff19960c56.md) page
 - All slices merged or created are then logged in a file used in the next step by the content migration script. This file also has data about the different slice zones available in your custom types.
+</details>
 
-<br/>
-
-## Data models migration steps
+<details>
+    <summary>
+        Data models migration steps
+    </summary>
 
 1. After installing sm-script, run `cd sm-scripts` then `npm install`
 2. Create a `.env` file at the root of the script folder and create your `REPO`, `TOKEN` and `NEWREPO` 
@@ -136,38 +145,49 @@ In your legacy project (in production or in an environment), make sure all the d
 6. Check that all slices and custom types have been generated in Slice Machine
 7. Still in SM, edit a slice and save the data model, it will generate the `slices/index.js` that lists all your slices. (you can then remove this change if you want and save again the data model)
 8. Push to your changes
+</details>
 
-<br/>
-
-## After data model migration
+<details>
+    <summary>
+    After data model migration
+    </summary>
 
 - If you have integration fields
     - In the “Before Migration Setup” phase you should have done this : In your new repository, go to **Settings > Integration fields** and create your new integration field using the same data source as the one from your legacy repository
     - For the migrated slices using integration fields, update the `"catalog"` value in  `model.json` with the new endpoint generated in your new Prismic repository.
     - Push the slice to Prismic
 - If you want to create libraries follow [this documentation](https://prismic.io/docs/slice-machine#slice-libraries)
+</details>
+
 
 <br/>
 <br/>
 
 # Step 2 : Migrate your content
 
-## What does this script do
+<details>
+    <summary>
+    What does this script do
+    </summary>
 
 - This script will adapt the structure of the content to be compatible with Slice Machine data models relying on previously generated `logs.json` and exported documents from your legacy repository.
 - It will also generate file names that can be handled by the import tool in case of multiple locales.
+</details>
 
-<br/>
-
-## Content migration steps
+<details>
+    <summary>
+        Content migration steps
+    </summary>
 
 1. Export your content from the original legacy repository
 2. Place the unziped files in `exports/legacy_docs`
 3. Run `node migrate-content.js`
+</details>
 
-<br/>
-
-## After content migration
+<details>
+    <summary>
+        After content migration
+    </summary>
 
 - Import the `migrated/content/content.zip` file in your Prismic slice machine project repository.
 - If you want to check the documents, you will find all migrated files in `migrated/content/files`.
@@ -213,6 +233,8 @@ In your legacy project (in production or in an environment), make sure all the d
         `
         ```
 
+</details>
+
 <br/>
 <br/>
 
@@ -222,38 +244,53 @@ The final step of the project migration is to map your old links with the new on
 
 <br/>
 
-## What does this script do
+<details>
+    <summary>
+        What does this script do
+    </summary>
 
 - After migrating your content you’ll notice in the editing platform that all internal links are broken. That’s because the links are based on the legacy project documents ID.
 - The last script reconciles the documents by building a comparison table between document types then updates the internal links.
 - If you have a lot of documents, be careful, the script is using getDangerouslyAll method that returns all of your documents.
 
-<br/>
+</details>
 
-## Migration steps
+<details>
+    <summary>
+        Migration steps
+    </summary>
 
 1. From your SM repository, if it is not done, publish the release created after the import
 2. Export the documents
 3. Unzip the files and place them in the `exports/sm_docs`
 4. Run `node migrate-links`
 
-<br/>
+</details>
 
-## After links migration
+<details>
+    <summary>
+        After links migration
+    </summary>
 
 - If you want to check the documents, you will find all migrated files in `migrated/content/linked_files`.
 - If you have more than 200 documents to import, you will need to create multiple zip files to import them in your Prismic repository.
 
 1. Import  `migrated/content/links.zip` in your slice machine repository. This will create a release containing your documents with the new links. There’s no need to delete the documents that are already published.
 
-
 2. Check the generated release that all links are not broken. You can check each file or preview the release to do so.
 
+</details>
+
+<br/>
 <br/>
 
 # After Migration
 
-## Update your code
+<details>
+    <summary>
+        Update your code
+    </summary>
+
 - Make sure all your react components in the correct `slice/ExampleSlice/index.js` file.
     - You will need to create an `index.js` file in each slice folder.  This step can be done after the whole migration project is done. Copy and paste your existing components in the `index.js` or build it from scratch using the slice simulator.
 - Also don’t forget to update the components that use slices variations.
@@ -263,7 +300,12 @@ The final step of the project migration is to map your old links with the new on
       - https://prismic.io/docs/prismic-client-v6-migration-guide
       - https://prismic.io/docs/prismic-react-v2-migration-guide
 
-### If you want to create variations
+</details>
+
+<details>
+    <summary>
+        If you want to create variations
+    </summary>
 
   - Variations are versions of a slice and can only be created through Slice Machine.
   - Determine the slices to group into variations : [more information about variations](https://prismic.io/docs/technologies/slice-machine#add-a-slice-variation)
@@ -313,13 +355,18 @@ The final step of the project migration is to map your old links with the new on
     4. Repeat the steps 2 and 3 for each variation
     5. Once you’re done creating all your variations, in Slice Machine push your changes
     6. Apply the variation in your content
-        1. Make sure to conditionally render the fields in your slice's `index.js`
-        2. Specify the variation to use in your migrated content
+       - Make sure to conditionally render the fields in your slice's `index.js`
+       - Specify the variation to use in your migrated content
 
-<br/>
+</details>
 
-## Check your content
+<details>
+    <summary>
+        Check your content
+    </summary>
 
 If a appear empty in the  :
   - It was probably merged. In that case, you’ll need to manually create the missing slice using Slice Machine
   - If it is similar to a slice that was already successfully migrated, we recommend creating a variation in that slice
+
+</details>
